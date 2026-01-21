@@ -1,80 +1,114 @@
-# Custom Memory Allocator Project
+# Custom Memory Allocator
 
-## 🎯 What is This Project? (Explained Like You're 10 Years Old)
+A high-performance custom memory allocator implementation in C++ that replaces the standard `malloc()` and `free()` functions. This project demonstrates advanced systems programming concepts including memory pool management, free list optimization, and fragmentation reduction strategies.
 
-Imagine you have a toy box, and you want to organize your toys better. Right now, when you ask for a toy (like asking for memory in a computer), someone just throws toys randomly into the box. When you're done playing, you throw it back in, but everything gets messy!
+## Overview
 
-**A memory allocator is like a super-organized toy organizer:**
+This allocator implements a custom dynamic memory management system with the following key features:
 
-1. **Memory Pools** = Different boxes for different sized toys
-   - Small toys go in the small box
-   - Medium toys go in the medium box
-   - Big toys go in the big box
-   - This makes finding toys faster!
+### Core Components
 
-2. **Free Lists** = A list of empty spaces
-   - When you put a toy back, you write down "Space #5 is empty now"
-   - Next time you need that size, you check your list first
-   - No need to search the whole box!
+1. **Memory Pools**
+   - Segregated size classes for efficient allocation
+   - Separate pools for small (8-64 bytes), medium (65-256 bytes), large (257-1024 bytes), and extra-large (>1024 bytes) allocations
+   - Reduces search time and improves cache locality
 
-3. **Fragmentation Reduction** = Keeping things neat
-   - Instead of having tiny empty spaces everywhere (like puzzle pieces scattered)
-   - You combine small empty spaces into bigger ones
-   - Like organizing puzzle pieces back into the box properly!
+2. **Free List Management**
+   - Maintains linked lists of available memory blocks per size class
+   - Enables O(1) allocation for common sizes
+   - Eliminates the need for linear search through memory
 
-**Why is this cool?**
-- Computers use `malloc()` and `free()` to get memory (like asking for toys)
-- But the default way is slow and messy
-- You're building a FASTER, SMARTER way to organize memory!
-- It's like building your own super-organized toy system!
+3. **Fragmentation Reduction**
+   - Block coalescing to merge adjacent free blocks
+   - Reduces external fragmentation
+   - Implements both first-fit and best-fit allocation strategies
 
-## 📚 What You'll Learn
+## Technical Concepts
 
-- **Heap vs Stack**: Where memory lives in your computer
-- **Pointer Arithmetic**: Math with memory addresses
-- **Alignment**: Making sure things fit properly (like Tetris pieces)
-- **False Sharing**: When things accidentally slow each other down
-- **Cache Lines**: How your computer's brain remembers things
-- **Undefined Behavior**: Tricky bugs that are hard to find!
+This project covers advanced systems programming topics:
 
-## 🏗️ Project Structure
+- **Heap Management**: Understanding the heap memory model and its trade-offs
+- **Pointer Arithmetic**: Low-level memory address manipulation
+- **Memory Alignment**: Ensuring proper data alignment for performance and correctness
+- **False Sharing**: Cache line contention in multi-threaded environments
+- **Cache Locality**: Optimizing memory access patterns
+- **Undefined Behavior**: Identifying and avoiding memory-related undefined behavior
+
+## Project Structure
 
 ```
-Custom Memory Allocator/
-├── README.md              (This file!)
-├── ASSIGNMENT.md          (Detailed instructions)
-├── allocator.h            (Function declarations)
-├── allocator.cpp          (Your implementation)
-├── test_allocator.cpp     (Tests to verify your code)
-└── Makefile               (Build instructions)
+Custom-Memory-Allocator/
+├── README.md              Project overview and documentation
+├── ASSIGNMENT.md          Detailed implementation requirements
+├── QUICKSTART.md          Step-by-step implementation guide
+├── allocator.h            Header file with API and data structures
+├── allocator.cpp          Core allocator implementation
+├── test_allocator.cpp     Comprehensive test suite
+└── Makefile               Build system and test runner
 ```
 
-## 🚀 Quick Start
+## Building and Testing
 
-1. Read `ASSIGNMENT.md` for detailed instructions
-2. Implement functions in `allocator.cpp`
-3. Run `make` to build
-4. Run `make test` to test your implementation
-5. Compare performance with `make benchmark`
+### Prerequisites
+- C++17 compatible compiler (GCC or Clang)
+- Make build system
+- (Optional) Valgrind for memory leak detection
 
-## 📝 Project Goals
+### Build Commands
 
-- [ ] Implement basic `my_malloc()` and `my_free()`
-- [ ] Create memory pools for different sizes
-- [ ] Build free lists to track available memory
-- [ ] Reduce fragmentation
-- [ ] Test and benchmark your allocator
-- [ ] (Stretch) Add thread-local allocation
-- [ ] (Stretch) Visualize fragmentation
+```bash
+# Build the project
+make
 
-## 🎓 This is a College-Level Project!
+# Run test suite
+make test
 
-This project demonstrates:
-- Deep understanding of memory management
-- Systems programming skills
-- Performance optimization
-- Debugging complex issues
+# Run with memory leak detection
+make valgrind
 
-**Recruiters notice this!** Very few students attempt custom allocators.
+# Build optimized release version
+make release
 
-Good luck! 🚀
+# Clean build artifacts
+make clean
+```
+
+## Implementation Status
+
+### Core Features
+- [x] Project structure and framework
+- [ ] Basic `my_malloc()` and `my_free()` implementation
+- [ ] Memory pool initialization and management
+- [ ] Free list data structure
+- [ ] Block coalescing algorithm
+- [ ] Alignment handling
+- [ ] `my_calloc()` and `my_realloc()` support
+
+### Advanced Features (Stretch Goals)
+- [ ] Thread-local allocation pools
+- [ ] Performance benchmarking vs. standard malloc
+- [ ] Fragmentation visualization tools
+- [ ] Memory leak detection and reporting
+
+## Academic and Professional Value
+
+This project demonstrates proficiency in:
+
+- **Systems Programming**: Low-level memory management and system calls
+- **Algorithm Design**: Efficient data structures for memory allocation
+- **Performance Optimization**: Cache-aware design and allocation strategies
+- **Debugging Skills**: Identifying and resolving memory-related issues
+- **Software Engineering**: Well-structured, testable, and maintainable code
+
+Custom memory allocators are rarely implemented by students, making this project particularly noteworthy for technical interviews and portfolio reviews.
+
+## Documentation
+
+- See `ASSIGNMENT.md` for detailed implementation requirements and grading rubric
+- See `QUICKSTART.md` for a step-by-step implementation guide
+- Code comments in `allocator.h` and `allocator.cpp` provide implementation guidance
+
+## License
+
+This project is part of an academic assignment and is intended for educational purposes.
+
