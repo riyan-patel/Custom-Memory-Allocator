@@ -1,0 +1,29 @@
+# Build directories
+build/
+*.o
+*.obj
+
+# Executables
+test_allocator
+benchmark
+*.exe
+
+# Debug files
+*.dSYM/
+*.dwarf
+*.pdb
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
