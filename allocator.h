@@ -43,6 +43,10 @@ struct BlockHeader {
     // bool is_free;
     // BlockHeader* next_free;
     // uint32_t magic;  // For debugging (e.g., 0xDEADBEEF)
+    size_t size;
+    bool is_free;
+    BlockHeader* next_free;
+
 };
 
 // ============================================================================
@@ -67,6 +71,14 @@ struct MemoryPool {
     // BlockHeader* free_list;
     // size_t allocated_bytes;
     // size_t free_bytes;
+    void* pool_start;
+    size_t pool_size;
+    BlockHeader* free_list;
+
+
+    // for statistics
+    size_t allocated_bytes;
+    size_t free_bytes;
 };
 
 // ============================================================================
